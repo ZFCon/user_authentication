@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
-import { User } from '../models/user';
+import AuthenticationController from '../controllers/authentication.controller';
 import { RegisterDto } from '../dto/register.dto';
 import { dtoToValidator } from '../utils/validator';
+import express, { Request, Response } from 'express';
 
 const router = express.Router();
 
@@ -15,5 +15,7 @@ router.get('', (req: Request, res: Response): void => {
       res.json(errors);
     });
 });
+
+router.post('/auth/register', AuthenticationController.register);
 
 export default router;
