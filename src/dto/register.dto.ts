@@ -35,3 +35,13 @@ export class RegisterDto {
   @MinLength(6)
   password: string;
 }
+
+
+export class LoginDto {
+  @IsEmail()
+  @IsString()
+  email: string;
+
+  @MinLength(6)
+  password: string;
+}

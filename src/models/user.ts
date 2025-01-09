@@ -1,4 +1,3 @@
-import { SECRET } from '../config/auth.config';
 import bcrypt from 'bcrypt';
 import { Document, model, Schema } from 'mongoose';
 
@@ -7,7 +6,7 @@ export interface IUser {
   email: string;
   password?: string;
   setPassword(password: string): Promise<void>;
-  checkPassword(password: string): Promise<void>;
+  checkPassword(password: string): Promise<Boolean>;
 }
 
 const UserSchema = new Schema<IUser>(
@@ -46,8 +45,9 @@ UserSchema.methods.setPassword = async function (password: string) {
   this.save();
 };
 
-UserSchema.methods.checkPassword = async function (password: string) {
-  return await bcrypt.compare(password, this.password);
+UserSchema.methods.checkPassword = async function (password: string): Promise<Boolean> {
+  return bcrypt.compare(password, this.password);
 };
+
 
 export const User = model<IUser>('User', UserSchema);

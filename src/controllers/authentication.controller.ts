@@ -1,6 +1,7 @@
-import { RegisterDto } from '../dto/register.dto';
+import { RegisterDto, LoginDto } from '../dto/register.dto';
 import { userService } from '../services/user.service';
-import { dtoToValidator } from '../utils/validator';
+import { createAccessToken } from '../utils/auth.util';
+import { dtoToValidator } from '../utils/validator.util';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
@@ -8,10 +9,35 @@ class AuthenticationController {
   async register(req: Request, res: Response) {
     const validator = dtoToValidator(RegisterDto);
     const validatorChecks = await validator(req.body);
+
     if (!validatorChecks.length) {
       const user = await userService.createUser(req.body);
-      await user.setPassword(req.body.password);
-      res.status(httpStatus.CREATED).json(user);
+
+      res
+        .status(httpStatus.CREATED)
+        .json({
+          user,
+          accessToken: createAccessToken({ id: user.id, name: user.name, email: user.email }),
+        });
+    } else {
+      res.status(httpStatus.BAD_REQUEST).json(validatorChecks);
+    }
+  };
+
+  async login(req: Request, res: Response) {
+    const validator = dtoToValidator(LoginDto);
+    const validatorChecks = await validator(req.body);
+
+    if (!validatorChecks.length) {
+      userService.login(req.body.email, req.body.password).then(
+        accessToken => {
+          res.status(httpStatus.OK).json({accessToken})
+        }
+      ).catch(
+        err => {
+          res.status(httpStatus.UNAUTHORIZED).json({message: err.message});
+        }
+      )
     } else {
       res.status(httpStatus.BAD_REQUEST).json(validatorChecks);
     }
