@@ -1,7 +1,7 @@
-import { validateOrReject } from 'class-validator';
+import { validate } from 'class-validator';
 
 export function dtoToValidator(dtoClass: new () => any) {
-  return (body: Object) => {
-    return validateOrReject(Object.assign(new dtoClass(), body));
+  return async (body: Object) => {
+    return await validate(Object.assign(new dtoClass(), body));
   };
 }

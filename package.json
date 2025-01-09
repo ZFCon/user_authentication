@@ -13,7 +13,9 @@
   "author": "Ziad A.",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/supertest": "^6.0.2",
+    "bcrypt": "^5.1.1",
     "class-transform": "^0.7.0",
     "class-validator": "^0.14.1",
     "cors": "^2.8.5",

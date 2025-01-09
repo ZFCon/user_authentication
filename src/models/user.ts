@@ -1,9 +1,13 @@
-import { Document, Model, model, Schema } from 'mongoose';
+import { SECRET } from '../config/auth.config';
+import bcrypt from 'bcrypt';
+import { Document, model, Schema } from 'mongoose';
 
 export interface IUser {
   name: string;
   email: string;
   password?: string;
+  setPassword(password: string): Promise<void>;
+  checkPassword(password: string): Promise<void>;
 }
 
 const UserSchema = new Schema<IUser>(
@@ -36,5 +40,14 @@ const UserSchema = new Schema<IUser>(
     },
   },
 );
+
+UserSchema.methods.setPassword = async function (password: string) {
+  this.password = await bcrypt.hash(password, 10);
+  this.save();
+};
+
+UserSchema.methods.checkPassword = async function (password: string) {
+  return await bcrypt.compare(password, this.password);
+};
 
 export const User = model<IUser>('User', UserSchema);
