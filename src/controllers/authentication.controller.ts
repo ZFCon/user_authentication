@@ -17,7 +17,7 @@ class AuthenticationController {
         .status(httpStatus.CREATED)
         .json({
           user,
-          accessToken: createAccessToken({ id: user.id, name: user.name, email: user.email }),
+          accessToken: createAccessToken(user),
         });
     } else {
       res.status(httpStatus.BAD_REQUEST).json(validatorChecks);

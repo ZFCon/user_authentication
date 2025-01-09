@@ -2,18 +2,12 @@ import AuthenticationController from '../controllers/authentication.controller';
 import { RegisterDto } from '../dto/register.dto';
 import { dtoToValidator } from '../utils/validator.util';
 import express, { Request, Response } from 'express';
+import passport from 'passport';
 
 const router = express.Router();
 
-router.get('', (req: Request, res: Response): void => {
-  const validator = dtoToValidator(RegisterDto);
-  validator({ name: 'potato' })
-    .then(() => {
-      res.json({ message: "it's okay bruduh" });
-    })
-    .catch((errors) => {
-      res.json(errors);
-    });
+router.get('', passport.authenticate('jwt', {session: false}), (req: Request, res: Response): void => {
+  res.json({ message: "it's okay bruduh", user: req.user });
 });
 
 router.post('/auth/register', AuthenticationController.register);
