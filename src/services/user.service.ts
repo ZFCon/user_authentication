@@ -1,6 +1,6 @@
-import { RegisterDto } from '../dto/register.dto';
+import { RegisterDto } from '../dto/auth.dto';
 import { User } from '../models/user';
-import {createAccessToken} from '../utils/auth.util';
+import { createAccessToken, createRefreshToken } from '../utils/auth.util';
 
 class UserSerivce {
   async createUser(data: RegisterDto) {
@@ -18,11 +18,17 @@ class UserSerivce {
     return await User.findById(id);
   }
 
-  async login(email: string, password: string): Promise<string> {
+  async login(email: string, password: string) {
     const user = await this.getUserByEmail(email);
     if (user) {
       if (await user.checkPassword(password)) {
-        return createAccessToken(user);
+        const accessToken = createAccessToken(user);
+        const refreshToken = createRefreshToken(user);
+
+        return {
+          accessToken,
+          refreshToken,
+        };
       }
     }
 

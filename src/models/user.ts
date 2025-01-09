@@ -50,5 +50,4 @@ UserSchema.methods.checkPassword = async function (password: string): Promise<Bo
   return bcrypt.compare(password, this.password);
 };
 
-
 export const User = model<IUser>('User', UserSchema);

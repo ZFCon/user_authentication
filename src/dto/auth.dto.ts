@@ -36,7 +36,6 @@ export class RegisterDto {
   password: string;
 }
 
-
 export class LoginDto {
   @IsEmail()
   @IsString()
@@ -44,4 +43,9 @@ export class LoginDto {
 
   @MinLength(6)
   password: string;
+}
+
+export class RefreshDto {
+  @IsString()
+  refreshToken: string;
 }
