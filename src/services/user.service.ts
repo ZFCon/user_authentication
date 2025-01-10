@@ -1,6 +1,6 @@
 import { RegisterDto } from '../dto/auth.dto';
 import { User } from '../models/user';
-import { createAccessToken, createRefreshToken } from '../utils/auth.util';
+import { createAccessToken, createRefreshToken } from '../utils/auth.utils';
 
 class UserSerivce {
   async createUser(data: RegisterDto) {

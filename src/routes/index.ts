@@ -1,6 +1,6 @@
 import AuthenticationController from '../controllers/authentication.controller';
 import { RegisterDto } from '../dto/auth.dto';
-import { dtoToValidator } from '../utils/validator.util';
+import { dtoToValidator } from '../utils/validator.utils';
 import express, { Request, Response } from 'express';
 import passport from 'passport';
 

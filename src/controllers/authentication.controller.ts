@@ -1,7 +1,7 @@
 import { RegisterDto, LoginDto, RefreshDto } from '../dto/auth.dto';
 import { userService } from '../services/user.service';
-import { createAccessToken, createRefreshToken, verifyRefreshToken } from '../utils/auth.util';
-import { dtoToValidator } from '../utils/validator.util';
+import { createAccessToken, createRefreshToken, verifyRefreshToken } from '../utils/auth.utils';
+import { dtoToValidator } from '../utils/validator.utils';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 

@@ -1,6 +1,6 @@
 import { PUBLIC_ACCESS_TOKEN_KEY } from '../config/auth.config';
 import { userService } from '../services/user.service';
-import { AccessTokenPayload } from '../utils/auth.util';
+import { AccessTokenPayload } from '../utils/auth.utils';
 import passport from 'passport';
 import { Strategy, ExtractJwt, StrategyOptionsWithSecret } from 'passport-jwt';
 
